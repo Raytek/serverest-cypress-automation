@@ -20,11 +20,13 @@
       "before",
       "beforeEach",
       "after",
-      "afterEach"
+      "afterEach",
+      "expect"
     ]
   },
   "devDependencies": {
     "cypress": "^15.21.0",
-    "standard": "^17.1.2"
+    "standard": "^17.1.2",
+    "uuid": "^14.0.2"
   }
 }
