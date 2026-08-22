@@ -1,0 +1,15 @@
+{
+  "name": "serverest-cypress-automation",
+  "version": "1.0.0",
+  "description": "Automated testing project built on top of [ServeRest](https://github.com/ServeRest/ServeRest) using Cypress and JavaScript.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^15.21.0"
+  }
+}
