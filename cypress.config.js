@@ -1,4 +1,4 @@
-const { defineConfig } = require("cypress");
+const { defineConfig } = require('cypress')
 
 module.exports = defineConfig({
   allowCypressEnv: false,
@@ -6,14 +6,14 @@ module.exports = defineConfig({
   e2e: {
     specPattern: [
       'cypress/e2e/**/*.cy.js',
-      'cypress/api/**/*.cy.js',
+      'cypress/api/**/*.cy.js'
     ],
     baseUrl: 'https://front.serverest.dev',
     env: {
-      apiUrl: 'https://serverest.dev',
+      apiUrl: 'https://serverest.dev'
     },
-    setupNodeEvents(on, config) {
+    setupNodeEvents (on, config) {
       // implement node event listeners here
-    },
-  },
-});
+    }
+  }
+})

@@ -4,12 +4,27 @@
   "description": "Automated testing project built on top of [ServeRest](https://github.com/ServeRest/ServeRest) using Cypress and JavaScript.",
   "main": "index.js",
   "scripts": {
+    "lint": "standard",
+    "lint:fix": "standard --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "standard": {
+    "globals": [
+      "cy",
+      "Cypress",
+      "describe",
+      "it",
+      "before",
+      "beforeEach",
+      "after",
+      "afterEach"
+    ]
+  },
   "devDependencies": {
-    "cypress": "^15.21.0"
+    "cypress": "^15.21.0",
+    "standard": "^17.1.2"
   }
 }
