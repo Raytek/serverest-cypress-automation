@@ -4,15 +4,18 @@ const productService = require('../support/services/product.service')
 const userService = require('../support/services/user.service')
 
 Cypress.Commands.addAll({
-  cleanupTestData () {
-    const cleanupAdmin = userFactory.createAdminUser()
-    userService.createUser(cleanupAdmin)
-    authService.authenticateUser(cleanupAdmin)
+  authenticateUser (user) {
+    userService.createUser(user)
+    return authService.authenticateUser(user)
       .then((response) => {
         expect(response.body).to.have.property('authorization')
-
-        const auth = response.body.authorization
-
+        return response.body.authorization
+      })
+  },
+  cleanupTestData () {
+    const cleanupAdmin = userFactory.createAdminUser()
+    cy.authenticateUser(cleanupAdmin)
+      .then((auth) => {
         productService.getProducts()
           .then((productsResponse) => {
             const testProducts = productsResponse.body.produtos.filter(
@@ -44,11 +47,9 @@ Cypress.Commands.addAll({
   },
   loginAsAdmin () {
     const adminUser = userFactory.createAdminUser()
-    userService.createUser(adminUser)
-    return authService.authenticateUser(adminUser)
-      .then((response) => {
-        const auth = response.body.authorization
-        cy.visit('/admin/home', {
+    return cy.authenticateUser(adminUser)
+      .then((auth) => {
+        return cy.visit('/admin/home', {
           onBeforeLoad (win) {
             win.localStorage.setItem('serverest/userToken', auth)
             win.localStorage.setItem('serverest/userNome', adminUser.nome)
