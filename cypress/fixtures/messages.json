@@ -1,0 +1,14 @@
+{
+  "api": {
+    "productCreated": "Cadastro realizado com sucesso",
+    "missingAuthentication": "Token de acesso ausente, inválido, expirado ou usuário do token não existe mais",
+    "adminOnly": "Rota exclusiva para administradores"
+  },
+  "productRegistration": {
+    "duplicateProduct": "Já existe produto com esse nome",
+    "requiredName": "Nome é obrigatório",
+    "requiredPrice": "Preco é obrigatório",
+    "requiredDescription": "Descricao é obrigatório",
+    "requiredQuantity": "Quantidade é obrigatório"
+  }
+}

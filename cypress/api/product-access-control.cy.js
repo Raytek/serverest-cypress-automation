@@ -5,13 +5,17 @@ const authService = require('../support/services/auth.service')
 const productService = require('../support/services/product.service')
 
 describe('Product access control', () => {
+  let messages
   before(() => {
+    cy.fixture('messages').then((data) => {
+      messages = data
+    })
     cy.cleanupTestData()
   })
   after(() => {
     cy.cleanupTestData()
   })
-  it('should allow an administrator to create a product', () => {
+  it('API-001 - should allow an administrator to create a product', () => {
     const adminUser = userFactory.createAdminUser()
     const product = productFactory.createProduct()
     userService.createUser(adminUser)
@@ -22,21 +26,21 @@ describe('Product access control', () => {
         productService.createProduct(product, response.body.authorization)
           .then((response) => {
             expect(response.status).to.eq(201)
-            expect(response.body.message).to.eq('Cadastro realizado com sucesso')
+            expect(response.body.message).to.eq(messages.api.productCreated)
             expect(response.body._id).to.be.a('string')
             expect(response.body._id).to.have.length.greaterThan(0)
           })
       })
   })
-  it('should reject product creation without authentication', () => {
+  it('API-002 - should reject product creation without authentication', () => {
     const product = productFactory.createProduct()
     productService.createProduct(product)
       .then((response) => {
         expect(response.status).to.eq(401)
-        expect(response.body.message).to.eq('Token de acesso ausente, inválido, expirado ou usuário do token não existe mais')
+        expect(response.body.message).to.eq(messages.api.missingAuthentication)
       })
   })
-  it('should reject product creation by a non-administrator user', () => {
+  it('API-003 - should reject product creation by a non-administrator user', () => {
     const consumerUser = userFactory.createConsumerUser()
     const product = productFactory.createProduct()
     userService.createUser(consumerUser)
@@ -47,7 +51,7 @@ describe('Product access control', () => {
         productService.createProduct(product, response.body.authorization)
           .then((response) => {
             expect(response.status).to.eq(403)
-            expect(response.body.message).to.eq('Rota exclusiva para administradores')
+            expect(response.body.message).to.eq(messages.api.adminOnly)
           })
       })
   })

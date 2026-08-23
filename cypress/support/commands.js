@@ -45,15 +45,16 @@ Cypress.Commands.addAll({
   loginAsAdmin () {
     const adminUser = userFactory.createAdminUser()
     userService.createUser(adminUser)
-    authService.authenticateUser(adminUser)
+    return authService.authenticateUser(adminUser)
       .then((response) => {
+        const auth = response.body.authorization
         cy.visit('/admin/home', {
           onBeforeLoad (win) {
-            win.localStorage.setItem('serverest/userToken', response.body.authorization)
+            win.localStorage.setItem('serverest/userToken', auth)
             win.localStorage.setItem('serverest/userNome', adminUser.nome)
             win.localStorage.setItem('serverest/userEmail', adminUser.email)
           }
-        })
+        }).then(() => auth)
       })
   }
 })
