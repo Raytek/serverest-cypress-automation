@@ -5,6 +5,12 @@ const authService = require('../support/services/auth.service')
 const productService = require('../support/services/product.service')
 
 describe('Product access control', () => {
+  before(() => {
+    cy.cleanupTestData()
+  })
+  after(() => {
+    cy.cleanupTestData()
+  })
   it('should allow an administrator to create a product', () => {
     const adminUser = userFactory.createAdminUser()
     const product = productFactory.createProduct()

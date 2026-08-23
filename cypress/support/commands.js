@@ -1,25 +1,43 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+const userFactory = require('../support/factories/user.factory')
+const authService = require('../support/services/auth.service')
+const productService = require('../support/services/product.service')
+const userService = require('../support/services/user.service')
+
+Cypress.Commands.add('cleanupTestData', () => {
+  const cleanupAdmin = userFactory.createAdminUser()
+  userService.createUser(cleanupAdmin)
+  authService.authenticateUser(cleanupAdmin)
+    .then((response) => {
+      expect(response.body).to.have.property('authorization')
+
+      const auth = response.body.authorization
+
+      productService.getProducts()
+        .then((productsResponse) => {
+          const testProducts = productsResponse.body.produtos.filter(
+            (product) => product.nome.startsWith('SRCA_QA_Product_')
+          )
+
+          testProducts.forEach((product) => {
+            productService.deleteProduct(product._id, auth)
+              .then((deleteProductResponse) => {
+                expect(deleteProductResponse.status).to.eq(200)
+              })
+          })
+        })
+
+      userService.getUsers()
+        .then((usersResponse) => {
+          const testUsers = usersResponse.body.usuarios.filter(
+            (user) => user.email.startsWith('srca.qa.')
+          )
+
+          testUsers.forEach((user) => {
+            userService.deleteUser(user._id)
+              .then((deleteUserResponse) => {
+                expect(deleteUserResponse.status).to.eq(200)
+              })
+          })
+        })
+    })
+})

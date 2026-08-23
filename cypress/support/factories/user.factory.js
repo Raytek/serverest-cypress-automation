@@ -3,7 +3,7 @@ const { v4: uuidv4 } = require('uuid')
 function createUser (overrides = {}) {
   return {
     nome: 'ServeRest QA User',
-    email: 'qa.user@serverest.dev',
+    email: 'srca.qa.user@serverest.dev',
     password: 'Test@321',
     administrador: 'false',
     ...overrides
@@ -13,7 +13,7 @@ function createUser (overrides = {}) {
 function createAdminUser () {
   return createUser({
     nome: 'ServeRest QA Admin',
-    email: `qa.admin.${uuidv4()}@serverest.dev`,
+    email: `srca.qa.admin.${uuidv4()}@serverest.dev`,
     administrador: 'true'
   })
 }
@@ -21,7 +21,7 @@ function createAdminUser () {
 function createConsumerUser () {
   return createUser({
     nome: 'ServeRest QA Consumer',
-    email: `qa.consumer.${uuidv4()}@serverest.dev`
+    email: `srca.qa.consumer.${uuidv4()}@serverest.dev`
   })
 }
 

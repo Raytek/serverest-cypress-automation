@@ -1,6 +1,8 @@
+const loginUrl = `${Cypress.expose('apiUrl')}/login`
+
 function authenticateUser (user) {
   return cy.request({
-    url: `${Cypress.expose('apiUrl')}/login`,
+    url: loginUrl,
     method: 'POST',
     body: {
       email: user.email,
