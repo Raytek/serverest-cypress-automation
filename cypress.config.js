@@ -1,6 +1,13 @@
 const { defineConfig } = require('cypress')
 
 module.exports = defineConfig({
+  reporter: 'mochawesome',
+  reporterOptions: {
+    reportDir: 'cypress/reports/mochawesome',
+    overwrite: false,
+    html: false,
+    json: true
+  },
   allowCypressEnv: false,
   expose: {
     apiUrl: 'https://serverest.dev'

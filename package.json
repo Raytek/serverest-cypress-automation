@@ -4,9 +4,16 @@
   "description": "Automated testing project built on top of [ServeRest](https://github.com/ServeRest/ServeRest) using Cypress and JavaScript.",
   "main": "index.js",
   "scripts": {
+    "test": "cypress run",
+    "test:api": "cypress run --spec \"cypress/api/**/*.cy.js\"",
+    "test:e2e": "cypress run --spec \"cypress/e2e/**/*.cy.js\"",
+    "test:open": "cypress open",
     "lint": "standard",
     "lint:fix": "standard --fix",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "report:clean": "rimraf cypress/reports cypress/screenshots cypress/videos",
+    "report:merge": "mochawesome-merge \"cypress/reports/mochawesome/*.json\" > cypress/reports/report.json",
+    "report:generate": "marge cypress/reports/report.json --reportDir cypress/reports --inline",
+    "report": "npm run report:merge && npm run report:generate"
   },
   "keywords": [],
   "author": "",
@@ -26,6 +33,10 @@
   },
   "devDependencies": {
     "cypress": "^15.21.0",
+    "mochawesome": "^8.0.1",
+    "mochawesome-merge": "^5.1.1",
+    "mochawesome-report-generator": "^6.3.2",
+    "rimraf": "^6.1.3",
     "standard": "^17.1.2",
     "uuid": "^14.0.2"
   }
