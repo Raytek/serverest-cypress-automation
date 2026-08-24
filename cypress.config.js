@@ -19,7 +19,6 @@ module.exports = defineConfig({
     ],
     baseUrl: 'https://front.serverest.dev',
     setupNodeEvents (on, config) {
-      // implement node event listeners here
     }
   }
 })
